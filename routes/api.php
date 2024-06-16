@@ -9,8 +9,8 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 Route::controller(UserController::class)->group(function(){
     Route::prefix('/user/')->group(function(){
-        Route::post('index','index');
-        Route::post('store','store');
+        Route::post('Login','index');
+        Route::post('Register','store');
         Route::put('update/{id}','update')->middleware('auth:sanctum');
     });
 });
