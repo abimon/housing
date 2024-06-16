@@ -53,13 +53,13 @@ class UserController extends Controller
 
     public function create()
     {
-        
+
     }
 
-    public function store(Request $request)
+    public function store()
     {
         try {
-            $validateUser = Validator::make($request->all(), 
+            $validateUser = Validator::make(request()->all(), 
             [
                 'email' => 'required|email|unique:users,email',
                 'password' => 'required'
@@ -74,8 +74,8 @@ class UserController extends Controller
             }
 
             $user = User::create([
-                'email' => $request->email,
-                'password' => Hash::make($request->password)
+                'email' => request('email'),
+                'password' => Hash::make(request('password'))
             ]);
 
             return response()->json([
@@ -127,6 +127,9 @@ class UserController extends Controller
         if(request()->idNumber != null){
             $user->idNumber=request()->idNumber;
         }
+        if((request()->role != null) && ((request()->user()->role) == 'Admin')){
+            $user->role=request()->role;
+        }
         if(request()->password != null){
             $user->password=Hash::make(request()->password);
         }
@@ -134,8 +137,8 @@ class UserController extends Controller
         return response($user,200);
     }
 
-    public function destroy(User $user)
+    public function destroy($id)
     {
-        //
+        
     }
 }

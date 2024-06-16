@@ -11,6 +11,6 @@ Route::controller(UserController::class)->group(function(){
     Route::prefix('/user/')->group(function(){
         Route::post('index','index');
         Route::post('store','store');
-        Route::put('update/{id}','update');
+        Route::put('update/{id}','update')->middleware('auth:sanctum');
     });
 });
