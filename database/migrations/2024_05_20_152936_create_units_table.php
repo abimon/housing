@@ -13,7 +13,14 @@ return new class extends Migration
     {
         Schema::create('units', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('appartment_id');
+            $table->string('unit_label');
+            $table->unsignedBigInteger('occupant_id')->nullable();
+            $table->string('status')->default('Vacant');
             $table->timestamps();
+
+            $table->foreign('occupant_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('appartment_id')->references('id')->on('appartments')->onDelete('cascade');
         });
     }
 

@@ -13,16 +13,17 @@ return new class extends Migration
     {
         Schema::create('appartments', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('owner');
-            $table->string('type');
+            $table->unsignedBigInteger('user_id');
             $table->string('cover_path');
+            $table->string('category');
             $table->string('location');
             $table->string('price');
+            $table->longText('facilities');
             $table->longText('description');
             $table->string('uniq_id');
             $table->timestamps();
 
-            $table->foreign('owner')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
