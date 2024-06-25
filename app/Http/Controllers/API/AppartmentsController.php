@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Appartments;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
 
 class AppartmentsController extends Controller
 {
@@ -21,6 +22,22 @@ class AppartmentsController extends Controller
 
     public function store(Request $request)
     {
+        $validateUser = Validator::make(request()->all(), 
+            [
+                'cover' => 'required|image',
+                'category'=>'required|string',
+                'location'=>'required|string',
+                'price'=>'required|string',
+                'description'=>'required|string',
+            ]);
+
+            if($validateUser->fails()){
+                return response()->json([
+                    'status' => false,
+                    'message' => 'validation error',
+                    'errors' => $validateUser->errors()
+                ], 401);
+            }
         if(request()->hasFile('cover')){
             $filepath =(pathinfo(request()->file('cover')->getClientOriginalPath(), PATHINFO_FILENAME));
             $filename=(Str::slug($filepath,'_')).'.'.(request()->file('cover')->getClientOriginalExtension());
