@@ -18,7 +18,7 @@ trait AuthenticatesUsers
      */
     public function showLoginForm()
     {
-        return view('auth.login');
+        return response()->json(['message'=> 'Error authenticating user','status'=>false],401);
     }
 
     /**
