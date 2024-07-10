@@ -17,5 +17,5 @@ Route::controller(UserController::class)->prefix('/user')->group(function(){
 Route::controller(AppartmentsController::class)->prefix('/property')->group(function () {
     Route::get('/index','index');
     Route::post('/store','store')->middleware('auth:sanctum');
-    Route::put('/update/{id}','update')->middleware('auth:sanctum'); 
+    Route::put('/update','update')->middleware('auth:sanctum'); 
 });
