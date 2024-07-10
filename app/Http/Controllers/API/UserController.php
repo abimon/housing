@@ -117,14 +117,11 @@ class UserController extends Controller
     {
         $user= User::findOrFail(Auth()->user()->id);
 
-        if(request()->fname != null){
-            $user->fname=request()->fname;
-        }
-        if(request()->mname != null){
-            $user->mname=request()->mname;
-        }
-        if(request()->lname != null){
-            $user->lname=request()->lname;
+        if(request()->name != null){
+            $name = explode(' ',request('name'));
+            $user->fname=$name[0];
+            $user->mname=$name[1];
+            $user->lname=$name[2];
         }
         if(request()->email != null){
             $user->email=request()->email;
