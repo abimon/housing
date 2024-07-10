@@ -113,7 +113,7 @@ class UserController extends Controller
         }
     }
 
-    public function update($id)
+    public function update()
     {
         $user= User::findOrFail(Auth()->user()->id);
 
