@@ -45,7 +45,7 @@ class AppartmentsController extends Controller
             $filename = (Str::slug($filepath, '_')) . '.' . (request()->file('cover')->getClientOriginalExtension());
             request()->file('cover')->storeAs('public/properties', $filename);
         } else {
-            return response()->json(['message' => 'File missing'], 404);
+            $filename = 'noimage.png';
         }
         $appartment = Appartments::create([
             "cover_path" => $filename,
