@@ -94,9 +94,10 @@ class UserController extends Controller
 
     }
 
-    public function show(User $user)
+    public function show()
     {
-        //
+        $user = Auth()->user();
+        return $user;
     }
 
     public function edit(User $user)
