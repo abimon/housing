@@ -100,9 +100,17 @@ class UserController extends Controller
         return $user;
     }
 
-    public function edit(User $user)
+    public function edit($id)
     {
-        //
+        if((request()->role != null) && ((Auth()->user()->role) == 'Admin')){
+            $user = User::findOrFail($id);
+            $user->role=request()->role;
+            $user->update();
+            return response()->json(['message' => 'Success'], 200);
+        }
+        else{
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
     }
 
     public function update($id)
@@ -126,9 +134,6 @@ class UserController extends Controller
         }
         if(request()->idNumber != null){
             $user->idNumber=request()->idNumber;
-        }
-        if((request()->role != null) && ((request()->user()->role) == 'Admin')){
-            $user->role=request()->role;
         }
         if(request()->password != null){
             $user->password=Hash::make(request()->password);
