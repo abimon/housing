@@ -13,13 +13,15 @@ class UserController extends Controller
     public function index()
     {
         try {
-            $validateUser = Validator::make(request()->all(), 
-            [
-                'email' => 'required|email',
-                'password' => 'required'
-            ]);
+            $validateUser = Validator::make(
+                request()->all(),
+                [
+                    'email' => 'required|email',
+                    'password' => 'required'
+                ]
+            );
 
-            if($validateUser->fails()){
+            if ($validateUser->fails()) {
                 return response()->json([
                     'status' => false,
                     'message' => 'validation error',
@@ -27,7 +29,7 @@ class UserController extends Controller
                 ], 401);
             }
 
-            if(!Auth::attempt(request()->only(['email', 'password']))){
+            if (!Auth::attempt(request()->only(['email', 'password']))) {
                 return response()->json([
                     'status' => false,
                     'message' => 'Email & Password does not match with our record.',
@@ -41,7 +43,6 @@ class UserController extends Controller
                 'message' => 'User Logged In Successfully',
                 'token' => $user->createToken("API TOKEN")->plainTextToken
             ], 200);
-
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,
@@ -52,19 +53,20 @@ class UserController extends Controller
 
     public function create()
     {
-
     }
 
     public function store()
     {
         try {
-            $validateUser = Validator::make(request()->all(), 
-            [
-                'email' => 'required|email|unique:users,email',
-                'password' => 'required'
-            ]);
+            $validateUser = Validator::make(
+                request()->all(),
+                [
+                    'email' => 'required|email|unique:users,email',
+                    'password' => 'required'
+                ]
+            );
 
-            if($validateUser->fails()){
+            if ($validateUser->fails()) {
                 return response()->json([
                     'status' => false,
                     'message' => 'validation error',
@@ -78,20 +80,17 @@ class UserController extends Controller
             ]);
 
             return response()->json([
-                'user'=>$user,
+                'user' => $user,
                 'status' => true,
                 'message' => 'User Created Successfully',
                 'token' => $user->createToken("API TOKEN")->plainTextToken
             ], 200);
-
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,
                 'message' => $th->getMessage()
             ], 500);
         }
-    
-
     }
 
     public function show()
@@ -102,45 +101,45 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        if((request()->role != null) && ((Auth()->user()->role) == 'Admin')){
+        if ((request()->role != null) && ((Auth()->user()->role) == 'Admin')) {
             $user = User::findOrFail($id);
-            $user->role=request()->role;
+            $user->role = request()->role;
             $user->update();
             return response()->json(['message' => 'Success'], 200);
-        }
-        else{
+        } else {
             return response()->json(['message' => 'Unauthorized'], 401);
         }
     }
 
     public function update()
     {
-        $user= User::findOrFail(Auth()->user()->id);
+        $user = User::findOrFail(Auth()->user()->id);
 
-        if(request()->name != null){
-            $name = explode(' ',request('name'));
-            $user->fname=$name[0];
-            $user->mname=$name[1];
-            $user->lname=$name[2];
+        if (request()->name != null) {
+            $name = explode(' ', request('name'));
+            if (count($name) == 3) {
+                $user->mname = $name[1];
+            }
+            $user->fname = $name[0];
+            $user->lname = end($name);
         }
-        if(request()->email != null){
-            $user->email=request()->email;
+        if (request()->email != null) {
+            $user->email = request()->email;
         }
-        if(request()->contact != null){
-            $user->contact=request()->contact;
+        if (request()->contact != null) {
+            $user->contact = request()->contact;
         }
-        if(request()->idNumber != null){
-            $user->idNumber=request()->idNumber;
+        if (request()->idNumber != null) {
+            $user->idNumber = request()->idNumber;
         }
-        if(request()->password != null){
-            $user->password=Hash::make(request()->password);
+        if (request()->password != null) {
+            $user->password = Hash::make(request()->password);
         }
         $user->update();
-        return response($user,200);
+        return response($user, 200);
     }
 
     public function destroy($id)
     {
-        
     }
 }
