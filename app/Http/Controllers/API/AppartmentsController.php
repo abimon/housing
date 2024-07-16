@@ -25,7 +25,6 @@ class AppartmentsController extends Controller
         $validateUser = Validator::make(
             request()->all(),
             [
-                'cover' => 'required|image',
                 'category' => 'required|string',
                 'location' => 'required|string',
                 'price' => 'required|string',
