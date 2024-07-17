@@ -78,7 +78,7 @@ class AppartmentsController extends Controller
             $filepath = (pathinfo(request()->file('cover')->getClientOriginalPath(), PATHINFO_FILENAME));
             $filename = (Str::slug($filepath, '_')) . '.' . (request()->file('cover')->getClientOriginalExtension());
             request()->file('cover')->saveAs('public/property/cover' . $filename);
-            $appartment->cover = $filename;
+            $appartment->cover_path = $filename;
         }
         if (request('category') != null) {
             $appartment->category = request('category');
