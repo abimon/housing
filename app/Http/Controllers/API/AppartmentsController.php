@@ -73,7 +73,7 @@ class AppartmentsController extends Controller
         // dd(request());
         Log::channel('updates')->info(json_encode(request()));
         $appartment = Appartments::findOrFail($id);
-        if (request()->hasFile('cover')) {
+        if (request()->file('cover')!=null) {
             
             $filepath = (pathinfo(request()->file('cover')->getClientOriginalPath(), PATHINFO_FILENAME));
             $filename = (Str::slug($filepath, '_')) . '.' . (request()->file('cover')->getClientOriginalExtension());
