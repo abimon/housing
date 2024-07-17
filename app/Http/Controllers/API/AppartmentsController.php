@@ -69,6 +69,7 @@ class AppartmentsController extends Controller
     }
     public function update($id)
     {
+        return request('cover');
         $appartment = Appartments::findOrFail($id);
         if (request()->hasFile('cover')) {
             $filepath = (pathinfo(request()->file('cover')->getClientOriginalPath(), PATHINFO_FILENAME));
@@ -89,7 +90,7 @@ class AppartmentsController extends Controller
             $appartment->description = request('description');
         }
         $appartment->update();
-        return response()->json(compact("appartment"), 200);
+        return response()->json(["message"=>'Update successiful.'], 200);
     }
 
     public function destroy($id)
