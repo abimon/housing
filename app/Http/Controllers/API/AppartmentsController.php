@@ -72,6 +72,7 @@ class AppartmentsController extends Controller
         // return request()->file('cover');
         $appartment = Appartments::findOrFail($id);
         if (request()->hasFile('cover')) {
+            return 'has file';
             $filepath = (pathinfo(request()->file('cover')->getClientOriginalPath(), PATHINFO_FILENAME));
             $filename = (Str::slug($filepath, '_')) . '.' . (request()->file('cover')->getClientOriginalExtension());
             request()->file('cover')->saveAs('public/property/cover' . $filename);
