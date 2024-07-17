@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Appartments;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 
@@ -70,9 +71,10 @@ class AppartmentsController extends Controller
     public function update($id)
     {
         // return request()->file('cover');
+        Log::channel('updates')->info(json_encode(dd(request())));
         $appartment = Appartments::findOrFail($id);
         if (request()->hasFile('cover')) {
-            return 'has file';
+            
             $filepath = (pathinfo(request()->file('cover')->getClientOriginalPath(), PATHINFO_FILENAME));
             $filename = (Str::slug($filepath, '_')) . '.' . (request()->file('cover')->getClientOriginalExtension());
             request()->file('cover')->saveAs('public/property/cover' . $filename);
