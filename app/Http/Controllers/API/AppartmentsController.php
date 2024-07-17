@@ -11,7 +11,7 @@ class AppartmentsController extends Controller
 {
     public function index()
     {
-        $appartments = Appartments::orderBy("created_at", "desc")->paginate(10);
+        $appartments = Appartments::orderBy("created_at", "desc")->get();
         return response()->json(["appartments"=>$appartments], 200);
     }
 
