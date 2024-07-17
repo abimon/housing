@@ -69,7 +69,7 @@ class AppartmentsController extends Controller
     }
     public function update($id)
     {
-        return request('cover');
+        return request()->file('cover');
         $appartment = Appartments::findOrFail($id);
         if (request()->hasFile('cover')) {
             $filepath = (pathinfo(request()->file('cover')->getClientOriginalPath(), PATHINFO_FILENAME));
