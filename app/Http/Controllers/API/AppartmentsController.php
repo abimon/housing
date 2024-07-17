@@ -12,7 +12,7 @@ class AppartmentsController extends Controller
     public function index()
     {
         $appartments = Appartments::orderBy("created_at", "desc")->paginate(10);
-        return response()->json(compact("appartments"), 200);
+        return response()->json(["appartments"=>$appartments], 200);
     }
 
     public function create()
@@ -70,9 +70,6 @@ class AppartmentsController extends Controller
     public function update($id)
     {
         $appartment = Appartments::findOrFail($id);
-        if (request('owner') != null) {
-            $appartment->owner = request('owner');
-        }
         if (request()->hasFile('cover')) {
             $filepath = (pathinfo(request()->file('cover')->getClientOriginalPath(), PATHINFO_FILENAME));
             $filename = (Str::slug($filepath, '_')) . '.' . (request()->file('cover')->getClientOriginalExtension());
