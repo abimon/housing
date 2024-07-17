@@ -59,9 +59,10 @@ class AppartmentsController extends Controller
         return response()->json(compact("appartment"), 200);
     }
 
-    public function show()
+    public function show($location)
     {
-        //
+        $appartments = Appartments::where('location',$location)->orderBy("created_at", "desc")->get();
+        return response()->json(["appartments"=>$appartments], 200);
     }
 
     public function edit()
