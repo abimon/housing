@@ -71,7 +71,7 @@ class AppartmentsController extends Controller
     public function update($id)
     {
         // return request()->file('cover');
-        Log::channel('updates')->info(json_encode(dd(request())));
+        Log::channel('updates')->info(json_encode(request()->file()));
         $appartment = Appartments::findOrFail($id);
         if (request()->hasFile('cover')) {
             
